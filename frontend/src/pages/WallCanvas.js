@@ -156,6 +156,37 @@ function WallCanvas() {
     setDraggedItem(null);
   };
 
+  const handleCanvasDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isAuthenticated && e.dataTransfer.types.includes('Files')) {
+      setIsDraggingFile(true);
+    }
+  };
+
+  const handleCanvasDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFile(false);
+  };
+
+  const handleCanvasDrop = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFile(false);
+
+    if (!isAuthenticated) {
+      alert('Please sign in to add images');
+      return;
+    }
+
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.type.startsWith('image/')) {
+      // Directly upload the dropped file
+      await handleAddImage(droppedFile, '');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background-light flex items-center justify-center">
