@@ -1,0 +1,102 @@
+import React, { useState } from 'react';
+
+function AddImageModal({ onClose, onAdd }) {
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [caption, setCaption] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) return;
+
+    setLoading(true);
+    await onAdd(file, caption);
+    setLoading(false);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 modal-overlay" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-soft p-8 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-slate-900">Add Image</h3>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600 transition"
+          >
+            <span className="material-symbols-outlined text-2xl">close</span>
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block w-full">
+              <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center cursor-pointer hover:border-primary transition">
+                {preview ? (
+                  <img src={preview} alt="Preview" className="max-h-64 mx-auto rounded-lg" />
+                ) : (
+                  <div>
+                    <span className="material-symbols-outlined text-6xl text-slate-400 mb-2">upload_file</span>
+                    <p className="text-slate-600 font-medium">Click to upload image</p>
+                    <p className="text-slate-400 text-sm mt-1">PNG, JPG, GIF up to 10MB</p>
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                required
+              />
+            </label>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Caption (optional)
+            </label>
+            <input
+              type="text"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition"
+              placeholder="e.g., Made my day!"
+            />
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-3 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-50 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!file || loading}
+              className="flex-1 px-4 py-3 bg-primary text-white font-bold rounded-xl hover:scale-105 active:scale-95 transition-transform shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {loading ? 'Uploading...' : 'Add Image'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default AddImageModal;
