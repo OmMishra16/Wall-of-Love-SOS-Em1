@@ -201,7 +201,7 @@ async def upload_file(file: UploadFile = File(...), user: dict = Depends(require
     
     return {
         "filename": unique_filename,
-        "url": f"/uploads/{unique_filename}"
+        "url": f"/api/uploads/{unique_filename}"
     }
 
 @app.get("/api/items")
