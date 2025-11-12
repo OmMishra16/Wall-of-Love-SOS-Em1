@@ -20,6 +20,7 @@ function WallCanvas() {
   const [showAddImageModal, setShowAddImageModal] = useState(false);
   const [showAddStickyModal, setShowAddStickyModal] = useState(false);
   const [draggedItem, setDraggedItem] = useState(null);
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
 
   // Fetch items from backend
   const fetchItems = useCallback(async () => {
