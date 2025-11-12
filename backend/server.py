@@ -44,8 +44,8 @@ security = HTTPBearer(auto_error=False)
 UPLOADS_DIR = Path("/app/backend/uploads")
 UPLOADS_DIR.mkdir(exist_ok=True)
 
-# Mount static files
-app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
+# Mount static files under /api prefix for Kubernetes ingress
+app.mount("/api/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
 
 # Pydantic Models
 class UserRegister(BaseModel):
