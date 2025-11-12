@@ -216,9 +216,11 @@ def create_item(item: WallItem, user: dict = Depends(require_auth)):
     item_dict["created_at"] = datetime.utcnow().isoformat()
     item_dict["created_by"] = user["id"]
     
-    items_collection.insert_one(item_dict)
+    # Insert and remove MongoDB's _id before returning
+    result = items_collection.insert_one(item_dict)
     
-    return {"id": item_dict["id"], **item_dict}
+    # Return without _id field
+    return {k: v for k, v in item_dict.items() if k != "_id"}
 
 @app.put("/api/items/{item_id}")
 def update_item(item_id: str, update_data: ItemUpdate, user: dict = Depends(require_auth)):
