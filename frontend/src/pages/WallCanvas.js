@@ -11,7 +11,7 @@ import AddStickyModal from '../components/AddStickyModal';
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 function WallCanvas() {
-  const { user, token, isAuthenticated } = useAuth();
+  const { token, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   
   const [items, setItems] = useState([]);
