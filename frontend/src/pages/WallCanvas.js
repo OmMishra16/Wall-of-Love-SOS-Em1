@@ -224,7 +224,21 @@ function WallCanvas() {
         onCopyLink={handleCopyShareLink}
       />
 
-      <main className="flex-1 overflow-auto canvas-bg cursor-grab active:cursor-grabbing">
+      <main 
+        className="flex-1 overflow-auto canvas-bg cursor-grab active:cursor-grabbing relative"
+        onDragOver={handleCanvasDragOver}
+        onDragLeave={handleCanvasDragLeave}
+        onDrop={handleCanvasDrop}
+      >
+        {isDraggingFile && (
+          <div className="absolute inset-0 bg-primary/10 backdrop-blur-sm z-10 flex items-center justify-center border-4 border-dashed border-primary">
+            <div className="bg-white rounded-2xl p-8 shadow-soft text-center">
+              <span className="material-symbols-outlined text-6xl text-primary mb-4">upload</span>
+              <p className="text-2xl font-bold text-slate-900">Drop image here to upload</p>
+              <p className="text-slate-600 mt-2">Your image will be added to the wall</p>
+            </div>
+          </div>
+        )}
         <div className="relative min-h-full w-full p-8 pt-24 md:p-16 md:pt-32">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {items.map((item, index) => (
