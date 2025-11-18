@@ -38,33 +38,33 @@ function ImageCard({ item, isEditMode, onUpdate, onDelete }) {
             </div>
           )}
         
-        {isEditMode && (
-          <div className="absolute top-2 right-2 flex gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsEditing(true);
-              }}
-              className="bg-white rounded-lg p-2 shadow-md hover:bg-slate-100 transition"
-              title="Edit caption"
-            >
-              <span className="material-symbols-outlined text-sm text-slate-600">edit</span>
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                if (window.confirm('Delete this item?')) {
-                  onDelete(item.id);
-                }
-              }}
-              className="bg-white rounded-lg p-2 shadow-md hover:bg-red-50 transition"
-              title="Delete"
-            >
-              <span className="material-symbols-outlined text-sm text-red-600">delete</span>
-            </button>
-          </div>
-        )}
-      </div>
+          {isEditMode && (
+            <div className="absolute top-2 right-2 flex gap-2 z-10">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsEditing(true);
+                }}
+                className="bg-white rounded-lg p-2 shadow-md hover:bg-slate-100 transition"
+                title="Edit caption"
+              >
+                <span className="material-symbols-outlined text-sm text-slate-600">edit</span>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (window.confirm('Delete this item?')) {
+                    onDelete(item.id);
+                  }
+                }}
+                className="bg-white rounded-lg p-2 shadow-md hover:bg-red-50 transition"
+                title="Delete"
+              >
+                <span className="material-symbols-outlined text-sm text-red-600">delete</span>
+              </button>
+            </div>
+          )}
+        </div>
 
       {isEditing ? (
         <div className="flex gap-2">
