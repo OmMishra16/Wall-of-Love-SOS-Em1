@@ -241,14 +241,25 @@ function WallCanvas() {
           </div>
         )}
         <div className="relative min-h-full w-full p-8 pt-24 md:p-16 md:pt-32">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <Masonry
+            breakpointCols={{
+              default: 5,
+              1536: 4,
+              1280: 4,
+              1024: 3,
+              768: 2,
+              640: 1
+            }}
+            className="flex -ml-8 w-auto"
+            columnClassName="pl-8 bg-clip-padding"
+          >
             {items.map((item, index) => (
               <div
                 key={item.id}
                 draggable={isEditMode}
                 onDragStart={(e) => handleDragStart(e, item)}
                 onDragEnd={handleDragEnd}
-                className={`card-enter ${draggedItem?.id === item.id ? 'dragging' : ''}`}
+                className={`mb-8 card-enter ${draggedItem?.id === item.id ? 'dragging' : ''}`}
                 style={{
                   animationDelay: `${index * 0.05}s`
                 }}
@@ -270,7 +281,7 @@ function WallCanvas() {
                 )}
               </div>
             ))}
-          </div>
+          </Masonry>
 
           {items.length === 0 && (
             <div className="text-center py-20">
