@@ -14,16 +14,29 @@ function ImageCard({ item, isEditMode, onUpdate, onDelete }) {
   };
 
   return (
-    <div className="flex flex-col gap-3 transition-transform duration-300 ease-in-out hover-scale">
-      <div className="relative w-full overflow-hidden rounded-2xl bg-white shadow-soft">
-        <img
-          className="h-full w-full object-cover"
-          src={`${API_URL}${item.image_url}`}
-          alt={item.caption || 'User feedback'}
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x500?text=Image+Not+Found';
-          }}
-        />
+    <>
+      <div className="flex flex-col gap-3 transition-transform duration-300 ease-in-out hover-scale">
+        <div 
+          className="relative w-full overflow-hidden rounded-2xl bg-white shadow-soft cursor-pointer group"
+          onClick={() => !isEditMode && setShowLightbox(true)}
+        >
+          <img
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            src={`${API_URL}${item.image_url}`}
+            alt={item.caption || 'User feedback'}
+            onError={(e) => {
+              e.target.src = 'https://via.placeholder.com/400x500?text=Image+Not+Found';
+            }}
+          />
+          
+          {/* Hover overlay with zoom icon */}
+          {!isEditMode && (
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+              <span className="material-symbols-outlined text-white text-6xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                zoom_in
+              </span>
+            </div>
+          )}
         
         {isEditMode && (
           <div className="absolute top-2 right-2 flex gap-2">
