@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import ImageLightbox from './ImageLightbox';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 function ImageCard({ item, isEditMode, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [caption, setCaption] = useState(item.caption || '');
+  const [showLightbox, setShowLightbox] = useState(false);
 
   const handleSaveCaption = () => {
     onUpdate(item.id, { caption });
