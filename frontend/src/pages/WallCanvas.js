@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import Masonry from 'react-masonry-css';
 import Header from '../components/Header';
 import ImageCard from '../components/ImageCard';
 import StickyNote from '../components/StickyNote';
