@@ -66,31 +66,40 @@ function ImageCard({ item, isEditMode, onUpdate, onDelete }) {
           )}
         </div>
 
-      {isEditing ? (
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="flex-1 px-3 py-1 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
-            placeholder="Add a caption..."
-            autoFocus
-          />
-          <button
-            onClick={handleSaveCaption}
-            className="px-3 py-1 bg-primary text-white text-sm rounded-lg hover:bg-primary/90"
-          >
-            Save
-          </button>
-        </div>
-      ) : (
-        item.caption && (
-          <p className="text-center text-sm font-medium text-slate-600">
-            {item.caption}
-          </p>
-        )
+        {isEditing ? (
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+              className="flex-1 px-3 py-1 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              placeholder="Add a caption..."
+              autoFocus
+            />
+            <button
+              onClick={handleSaveCaption}
+              className="px-3 py-1 bg-primary text-white text-sm rounded-lg hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        ) : (
+          item.caption && (
+            <p className="text-center text-sm font-medium text-slate-600">
+              {item.caption}
+            </p>
+          )
+        )}
+      </div>
+
+      {/* Lightbox Modal */}
+      {showLightbox && (
+        <ImageLightbox 
+          item={item} 
+          onClose={() => setShowLightbox(false)} 
+        />
       )}
-    </div>
+    </>
   );
 }
 
